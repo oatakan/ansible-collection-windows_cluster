@@ -1,0 +1,26 @@
+---
+
+- name: add a powershell module
+  win_psmodule:
+    name: xFailOverCluster
+    state: present
+
+- name: add windows features
+  win_dsc:
+    resource_name: WindowsFeature
+    Name: "{{ item }}"
+    Ensure: Present
+  register: install_features
+  loop: "{{ required_features }}"
+
+- name: reboot if needed
+  win_reboot:
+  when: item.reboot_required
+  loop: "{{ install_features.results }}"
+
+- name: ensure registry service is running
+  win_dsc:
+    resource_name: Service
+    Name: TermService
+    StartupType: Automatic
+    State: Running

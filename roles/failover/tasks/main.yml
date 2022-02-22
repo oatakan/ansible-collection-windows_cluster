@@ -1,0 +1,7 @@
+---
+
+- include_tasks: static.yml
+  when: cluster_ip_address is defined
+
+- include_tasks: dynamic.yml
+  when: cluster_ip_address is not defined

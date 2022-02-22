@@ -1,0 +1,36 @@
+---
+
+- name: add domain controller private IP as DNS server
+  win_dns_client:
+    adapter_names: "*"
+    ipv4_addresses: "{{ dns_servers | default([]) }}"
+
+- name: add a powershell module
+  win_psmodule:
+    name: ComputerManagementDsc
+    state: present
+
+- block:
+    - name: add windows server to the domain
+      win_dsc:
+        resource_name: Computer
+        Name: "{{ ansible_hostname }}"
+        DomainName: "{{ dns_domain_name }}"
+        JoinOU: '{{ join_ou_path | default("") }}'
+        Credential_username: "{{ domain_admin_username }}@{{ dns_domain_name }}"
+        Credential_password: "{{ domain_admin_password }}"
+      register: join_domain
+  rescue:
+    - name: add windows server to the domain
+      win_domain_membership:
+        dns_domain_name: "{{ dns_domain_name }}"
+        domain_admin_user: "{{ domain_admin_username }}@{{ dns_domain_name }}"
+        domain_admin_password: "{{ domain_admin_password }}"
+        domain_ou_path: '{{ join_ou_path | default("") }}'
+        state: domain
+      register: join_domain
+
+- name: reboot server if required
+  win_reboot:
+    post_reboot_delay: 30
+  when: join_domain.reboot_required

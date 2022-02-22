@@ -1,0 +1,17 @@
+namespace: "oatakan"
+name: "windows_cluster"
+version: "0.1.0"
+readme: "README.md"
+authors:
+  - "Orcun Atakan (https://github.com/oatakan)"
+description: "This collection contains example roles for setting up Windows failover clusters."
+license:
+  - "MIT"
+tags:
+  - windows
+  - cluster
+  - failover
+repository: "https://www.github.com/oatakan/ansible-collection-windows_cluster"
+homepage: "https://www.github.com/oatakan/ansible-collection-windows_cluster"
+documentation: "https://oatakan.github.io/ansible-collection-windows_cluster/"
+issues: "https://www.github.com/oatakan/ansible-collection-windows_cluster/issues"

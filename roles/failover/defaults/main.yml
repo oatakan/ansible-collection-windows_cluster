@@ -1,0 +1,14 @@
+---
+
+cluster_name: testcluster
+#cluster_ip_address: '192.168.100.20/24' # optional, if not specified dynamic ip will be used
+
+retry_interval_sec: 10
+retry_count: 60
+
+dns_domain_name: example.com
+
+cluster_file_share_witness: '\\Path\{{ cluster_name }}'
+cluster_quorom_enabled: false
+
+first_node: false
