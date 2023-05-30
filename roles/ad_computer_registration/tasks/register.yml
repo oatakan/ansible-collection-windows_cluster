@@ -1,15 +1,9 @@
 ---
 
-- name: add a powershell module
-  win_psmodule:
-    name: ActiveDirectoryDsc
-    state: present
-
 - name: add computer object
-  win_dsc:
+  ansible.windows.win_dsc:
     resource_name: ADComputer
     ComputerName: "{{ computer_name }}"
     Path: '{{ join_ou_path | default("") }}'
     Ensure: Present
-  when:
-    - computer_name is defined
+  when: computer_name is defined

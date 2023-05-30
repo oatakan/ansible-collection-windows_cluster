@@ -1,7 +1,9 @@
+---
+
 - name: set Quorum to node and NodeAndFileShareMajority
   win_dsc:
     resource_name: xClusterQuorum
     IsSingleInstance: 'Yes'
     Type: 'NodeAndFileShareMajority'
     Resource: '{{ cluster_file_share_witness }}'
-  ignore_errors: yes
+  ignore_errors: true
