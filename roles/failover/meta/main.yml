@@ -5,7 +5,7 @@ galaxy_info:
   role_name: failover
   company: Red Hat
   license: MIT
-  min_ansible_version: 2.5
+  min_ansible_version: 2.14.0
 
   platforms:
     - name: Windows

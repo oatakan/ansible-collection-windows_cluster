@@ -17,8 +17,8 @@ Requirements
 Role Variables
 --------------
 
-- dns_domain_name: example.com
-- join_ou_path: '' # this is optional when joining to a specific ou path structure
+- join_domain_dns_domain_name: example.com
+- join_domain_join_ou_path: '' # this is optional when joining to a specific ou path structure
 
 Dependencies
 ------------
@@ -27,9 +27,13 @@ Dependencies
 Example Playbook
 ----------------
 
-    - hosts: servers
-      roles:
-         - join_domain
+```yaml
+---
+- name: join domain
+  hosts: servers
+  roles:
+     - join_domain
+```
 
 License
 -------

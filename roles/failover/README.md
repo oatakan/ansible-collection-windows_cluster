@@ -19,12 +19,12 @@ Requirements
 Role Variables
 --------------
 
-- cluster_name: testcluster
-- cluster_ip_address: '192.168.100.20/24' # optional, if not specified dynamic ip will be used
-- dns_domain_name: example.com
-- cluster_file_share_witness: '\\Path\{{ cluster_name }}'
-- cluster_quorom_enabled: false
-- first_node: false # this should be set to true on the primary node, and false on secondary nodes
+- failover_cluster_name: testcluster
+- failover_cluster_ip_address: '192.168.100.20/24' # optional, if not specified dynamic ip will be used
+- failover_dns_domain_name: example.com
+- failover_cluster_file_share_witness: '\\Path\{{ failover_cluster_name }}'
+- failover_cluster_quorum_enabled: false
+- failover_first_node: false # this should be set to true on the primary node, and false on secondary nodes
 
 Dependencies
 ------------
@@ -33,9 +33,13 @@ Dependencies
 Example Playbook
 ----------------
 
-    - hosts: servers
-      roles:
-         - failover
+```yaml
+---
+- name: setup fail over on servers
+  hosts: servers
+  roles:
+     - failover
+```
 
 License
 -------

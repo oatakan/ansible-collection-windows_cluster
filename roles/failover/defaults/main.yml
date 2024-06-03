@@ -1,14 +1,16 @@
 ---
 
-cluster_name: testcluster
-# cluster_ip_address: '192.168.100.20/24' # optional, if not specified dynamic ip will be used
+failover_cluster_name: "{{ cluster_name | default('testcluster') }}"
+# failover_cluster_ip_address: '192.168.100.20/24' # optional, if not specified dynamic ip will be used
 
-retry_interval_sec: 10
-retry_count: 60
+failover_retry_interval_sec: "{{ retry_interval_sec | default(10) }}"
+failover_retry_count: "{{ retry_count | default(60) }}"
 
-dns_domain_name: example.com
+failover_dns_domain_name: "{{ dns_domain_name | default('example.com') }}"
 
-cluster_file_share_witness: '\\Path\{{ cluster_name }}'
-cluster_quorom_enabled: false
+failover_cluster_file_share_witness_path: '\\Path\{{ failover_cluster_name }}'
 
-first_node: false
+failover_cluster_file_share_witness: '{{ cluster_file_share_witness | default(failover_cluster_file_share_witness_path) }}'
+failover_cluster_quorum_enabled: "{{ cluster_quorum_enabled | default(false) }}"
+
+failover_first_node: "{{ first_node | default(false) }}"

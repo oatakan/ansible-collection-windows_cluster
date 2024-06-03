@@ -1,6 +1,7 @@
 ---
 
-- block:
+- name: ensure ActiveDirectoryDsc module is available
+  block:
     - name: ensure required powershell module is present
       community.windows.win_psmodule:
         name: ActiveDirectoryDsc
@@ -16,8 +17,10 @@
         name: ActiveDirectoryDsc
         state: present
 
-- include_tasks: register.yml
-  when: role_action == 'register'
+- name: register
+  ansible.builtin.include_tasks: register.yml
+  when: ad_computer_registration_role_action == 'register'
 
-- include_tasks: deregister.yml
-  when: role_action == 'deregister'
+- name: deregister
+  ansible.builtin.include_tasks: deregister.yml
+  when: ad_computer_registration_role_action == 'deregister'

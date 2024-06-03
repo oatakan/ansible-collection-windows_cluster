@@ -5,7 +5,8 @@
     adapter_names: "*"
     ipv4_addresses: "{{ dns_servers | default([]) }}"
 
-- block:
+- name: ensure ComputerManagementDsc module is available
+  block:
     - name: ensure required powershell module is present
       community.windows.win_psmodule:
         name: ComputerManagementDsc
@@ -21,23 +22,24 @@
         name: ComputerManagementDsc
         state: present
 
-- block:
+- name: add server to domain
+  block:
     - name: add windows server to the domain
       ansible.windows.win_dsc:
         resource_name: Computer
         Name: "{{ ansible_hostname }}"
-        DomainName: "{{ dns_domain_name }}"
-        JoinOU: '{{ join_ou_path | default("") }}'
-        Credential_username: "{{ domain_admin_username }}@{{ dns_domain_name }}"
+        DomainName: "{{ join_domain_dns_domain_name }}"
+        JoinOU: '{{ join_domain_join_ou_path | default("") }}'
+        Credential_username: "{{ domain_admin_username }}@{{ join_domain_dns_domain_name }}"
         Credential_password: "{{ domain_admin_password }}"
       register: join_domain
   rescue:
     - name: add windows server to the domain
       ansible.windows.win_domain_membership:
-        dns_domain_name: "{{ dns_domain_name }}"
-        domain_admin_user: "{{ domain_admin_username }}@{{ dns_domain_name }}"
+        dns_domain_name: "{{ join_domain_dns_domain_name }}"
+        domain_admin_user: "{{ domain_admin_username }}@{{ join_domain_dns_domain_name }}"
         domain_admin_password: "{{ domain_admin_password }}"
-        domain_ou_path: '{{ join_ou_path | default("") }}'
+        domain_ou_path: '{{ join_domain_join_ou_path | default("") }}'
         state: domain
       register: join_domain
 

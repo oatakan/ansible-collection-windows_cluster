@@ -18,7 +18,7 @@ Requirements
 Role Variables
 --------------
 
-- role_action: register/unregister
+- ad_computer_registration_role_action: register/unregister
 
 Dependencies
 ------------
@@ -27,10 +27,13 @@ Dependencies
 
 Example Playbook
 ----------------
-
-    - hosts: servers
-      roles:
-         - ad_computer_registration
+```yaml
+---
+- name: register computer
+  hosts: servers
+  roles:
+     - ad_computer_registration
+```
 
 License
 -------

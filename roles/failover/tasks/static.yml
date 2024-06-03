@@ -3,33 +3,34 @@
 - name: create windows cluster
   ansible.windows.win_dsc:
     resource_name: xCluster
-    Name: "{{ cluster_name }}"
+    Name: "{{ failover_cluster_name }}"
     StaticIPAddress: "{{ cluster_ip_address }}"
     DomainAdministratorCredential_username: "{{ domain_admin_username }}@{{ dns_domain_name }}"
     DomainAdministratorCredential_password: "{{ domain_admin_password }}"
   register: create_windows_cluster
-  ignore_errors: true
-  when: first_node
+  failed_when: false
+  when: failover_first_node
 
-- include_tasks: quorom.yml
+- name: configure quorum settings
+  ansible.builtin.include_tasks: quorum.yml
   when:
-    - cluster_quorom_enabled
-    - first_node
+    - failover_cluster_quorum_enabled
+    - failover_first_node
 
 - name: wait for cluster
   ansible.windows.win_dsc:
     resource_name: xWaitForCluster
-    Name: "{{ cluster_name }}"
-    RetryIntervalSec: "{{ retry_interval_sec }}"
-    RetryCount: "{{ retry_count }}"
-  when: not first_node
+    Name: "{{ failover_cluster_name }}"
+    RetryIntervalSec: "{{ failover_retry_interval_sec }}"
+    RetryCount: "{{ failover_retry_count }}"
+  when: not failover_first_node
 
 - name: join windows cluster
   ansible.windows.win_dsc:
     resource_name: xCluster
-    Name: "{{ cluster_name }}"
+    Name: "{{ failover_cluster_name }}"
     StaticIPAddress: "{{ cluster_ip_address }}"
     DomainAdministratorCredential_username: "{{ domain_admin_username }}@{{ dns_domain_name }}"
     DomainAdministratorCredential_password: "{{ domain_admin_password }}"
-  ignore_errors: true
-  when: not first_node
+  failed_when: false
+  when: not failover_first_node

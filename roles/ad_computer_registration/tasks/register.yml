@@ -4,6 +4,6 @@
   ansible.windows.win_dsc:
     resource_name: ADComputer
     ComputerName: "{{ computer_name }}"
-    Path: '{{ join_ou_path | default("") }}'
+    Path: '{{ ad_computer_registration_join_ou_path | default("") }}'
     Ensure: Present
   when: computer_name is defined

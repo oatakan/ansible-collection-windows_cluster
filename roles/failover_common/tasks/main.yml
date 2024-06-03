@@ -1,6 +1,7 @@
 ---
 
-- block:
+- name: ensure xFailOverCluster is available
+  block:
     - name: ensure required powershell module is present
       community.windows.win_psmodule:
         name: xFailOverCluster
@@ -22,7 +23,7 @@
     Name: "{{ item }}"
     Ensure: Present
   register: install_features
-  loop: "{{ required_features }}"
+  loop: "{{ failover_common_required_features }}"
 
 - name: reboot if needed
   ansible.windows.win_reboot:

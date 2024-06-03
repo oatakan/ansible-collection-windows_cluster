@@ -1,7 +1,9 @@
 ---
 
-- include_tasks: static.yml
+- name: static cluster
+  ansible.builtin.include_tasks: static.yml
   when: cluster_ip_address is defined
 
-- include_tasks: dynamic.yml
+- name: dynamic cluster
+  ansible.builtin.include_tasks: dynamic.yml
   when: cluster_ip_address is not defined

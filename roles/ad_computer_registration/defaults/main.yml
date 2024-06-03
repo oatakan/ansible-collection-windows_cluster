@@ -1,5 +1,5 @@
 ---
 
-role_action: register
+ad_computer_registration_role_action: "{{ role_action | default('register') }}"
 
-join_ou_path: ''
+ad_computer_registration_join_ou_path: "{{ join_ou_path | default('') }}"
