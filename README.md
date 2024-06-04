@@ -14,6 +14,13 @@ This Ansible collection provides roles to manage Windows failover clusters. It i
 
 This section provides a guide on how to build and publish this collection to the Ansible Galaxy.
 
+### Generating the Changelog
+
+1. Navigate to the root directory of your local repository where `galaxy.yml` is located.
+2. Run the following command to build the collection:
+   ```shell
+   antsibull-changelog release
+
 ### Building the Collection
 
 1. Navigate to the root directory of your local repository where `galaxy.yml` is located.
