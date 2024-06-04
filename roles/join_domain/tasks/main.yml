@@ -35,7 +35,7 @@
       register: join_domain
   rescue:
     - name: add windows server to the domain
-      ansible.windows.win_domain_membership:
+      microsoft.ad.membership:
         dns_domain_name: "{{ join_domain_dns_domain_name }}"
         domain_admin_user: "{{ domain_admin_username }}@{{ join_domain_dns_domain_name }}"
         domain_admin_password: "{{ domain_admin_password }}"

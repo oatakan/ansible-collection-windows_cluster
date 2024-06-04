@@ -1,11 +1,16 @@
 ---
 
 - name: remove computer object
-  ansible.windows.win_dsc:
-    resource_name: ADComputer
-    ComputerName: "{{ ad_computer_registration_computer_name }}"
-    Path: '{{ ad_computer_registration_join_ou_path | default("") }}'
-    Ensure: Absent
-  when:
-    - ad_computer_registration_computer_name is defined
-    - ad_computer_registration_computer_name | length
+  block:
+    - name: remove computer object (dsc)
+      ansible.windows.win_dsc:
+        resource_name: ADComputer
+        ComputerName: "{{ ad_computer_registration_computer_name }}"
+        Path: '{{ ad_computer_registration_join_ou_path | default("") }}'
+        Ensure: Absent
+  rescue:
+    - name: remove computer object (microsoft.ad)
+      microsoft.ad.computer:
+        name: '{{ ad_computer_registration_computer_name }}'
+        path: '{{ ad_computer_registration_join_ou_path | default("") }}'
+        state: absent
