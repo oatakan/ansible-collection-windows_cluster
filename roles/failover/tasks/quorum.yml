@@ -2,7 +2,7 @@
 
 - name: set Quorum to node and NodeAndFileShareMajority
   ansible.windows.win_dsc:
-    resource_name: xClusterQuorum
+    resource_name: ClusterQuorum
     IsSingleInstance: 'Yes'
     Type: 'NodeAndFileShareMajority'
     Resource: '{{ failover_cluster_file_share_witness }}'

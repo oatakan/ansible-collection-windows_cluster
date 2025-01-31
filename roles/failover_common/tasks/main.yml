@@ -4,8 +4,11 @@
   block:
     - name: ensure required powershell module is present
       community.windows.win_psmodule:
-        name: xFailOverCluster
+        name: FailoverClusterDsc
         state: present
+        repository: PSGallery
+        allow_clobber: true
+        accept_license: true
   rescue:
     - name: install latest version of PowershellGet
       ansible.windows.win_shell: |
@@ -14,8 +17,11 @@
 
     - name: ensure required powershell module is present (retry)
       community.windows.win_psmodule:
-        name: xFailOverCluster
+        name: FailoverClusterDsc
         state: present
+        repository: PSGallery
+        allow_clobber: true
+        accept_license: true
 
 - name: add windows features
   ansible.windows.win_dsc:
